@@ -2,7 +2,14 @@
 ### External Scripting Platform for League of Legends
 #### Please note this project is still in the early stages. Anything and everything is subject to change.
 
-## Please go to the branch SB-Version-2
+# THIS IS ONLY FOR EDUCATIONAL PURPOSES!
+## QUICK AND DIRTY FORK MADE TO IMPROVE THE READABILITY OF JUNGLE CAMPS
+1. Use entity game position to identify jungle camps
+2. Separated jungle monsters and respawn markers
+3. Basic timers for jungle camps: camp_timers.py
+4. Cheat to get timers from enemy team camps in FOW (needs improvement): camp_timers_cheat.py
+5. See scripts inside 'examples' folder
+6. Uses tkinter for the overlay
 
 # Discord + Documentation
 ### [Join Here](https://discord.gg/8tUDX3QDgg)

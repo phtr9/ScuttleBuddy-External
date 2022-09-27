@@ -6,9 +6,11 @@ from models.Minion import MinionEntity
 from models.Turret import TurretEntity
 from models.Ward import WardEntity
 from models.Monster import MonsterEntity
+from models.CampRespawn import CampRespawnEntity
 from resources import offsets, LeagueStorage
 from resources.StructureReader import StructureReader
 from functools import cached_property, cache
+
 
 GAME_DATA_ENDPOINT = 'https://127.0.0.1:2999/liveclientdata/allgamedata'
 CHAMPION_INFO_ENDPOINT = 'https://raw.communitydragon.org/latest/game/data/characters/{champion}/{champion}.bin.json'
@@ -52,11 +54,17 @@ class LeagueReader:
             if entity.name in self.__ward_names:
                 yield WardEntity(entity.pm, entity.mem, entity.overlay, entity.viewProjMatrix, entity.entityAddress)
 
-    @cached_property
+    # @cached_property
     def monsters(self) -> list[MonsterEntity]:
         for entity in self.get_non_players():
-            if entity.name not in self.__ward_names and 'Minion' not in entity.name:
+            if entity.name not in self.__ward_names and 'Minion' not in entity.name and 'SRU_CampRespawnMarker' not in entity.name:
                 yield MonsterEntity(entity.pm, entity.mem, entity.overlay, entity.viewProjMatrix, entity.entityAddress)
+
+    @cached_property
+    def campRespawns(self) -> list[CampRespawnEntity]:
+        for entity in self.get_non_players():
+            if entity.name not in self.__ward_names and 'Minion' not in entity.name and 'SRU_CampRespawnMarker' in entity.name:
+                yield CampRespawnEntity(entity.pm, entity.mem, entity.overlay, entity.viewProjMatrix, entity.entityAddress)
 
     @cached_property
     def turrets(self) -> list[TurretEntity]:

@@ -31,7 +31,10 @@ class Entity(Model):
 
     @cached_property
     def name(self) -> str:
-        return self.pm.read_string(self.nameAddr)
+        try:
+            return self.pm.read_string(self.nameAddr)
+        except UnicodeDecodeError:
+            return 'DECODE ERROR'
 
     @cached_property
     def level(self) -> int:
@@ -108,7 +111,10 @@ class Entity(Model):
 
     @cached_property
     def gamePos(self) -> dict:
-        return pymeow.read_vec3(self.mem, self.entityAddress + offsets.oObjPosition)
+        x = self.pm.read_float(self.entityAddress + offsets.oObjPosition)
+        y = self.pm.read_float(self.entityAddress + offsets.oObjPosition + 4)
+        z = self.pm.read_float(self.entityAddress + offsets.oObjPosition + 8)
+        return {"x": x, "y": y, "z": z}
 
     @cached_property
     def screenPos(self) -> dict:
